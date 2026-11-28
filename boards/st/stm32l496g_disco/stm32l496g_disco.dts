@@ -23,6 +23,7 @@
 		zephyr,flash = &flash0;
 		zephyr,flash-controller = &ext_flash_ctrl;
 		zephyr,display = &st7789v;
+		zephyr,touch = &ft6146;
 	};
 
 	leds {
@@ -313,6 +314,18 @@ zephyr_udc0: &usbotg_fs {
 		int-gpios = <&gpioh 6 GPIO_ACTIVE_LOW>;
 		gpio-controller;
 		#gpio-cells = <2>;
+	};
+
+	/* Capacitive touch panel (CN13), FT6x36 family, same bus as MFX */
+	ft6146: touchscreen@38 {
+		compatible = "focaltech,ft6146";
+		reg = <0x38>;
+		int-gpios = <&gpiog 14 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&mfx 1 GPIO_ACTIVE_LOW>;
+		swapped-x-y;
+		inverted-x;
+		screen-width = <240>;
+		screen-height = <240>;
 	};
 };
 
